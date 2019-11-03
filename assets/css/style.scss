@@ -1,0 +1,66 @@
+.navbar {
+  color: white;
+
+  a {
+    text-decoration: none;
+    color: white;
+
+    &:hover {
+      text-decoration: none;
+      color: #f00000;
+    }
+  }
+
+}
+
+.site {
+  background-color: whitesmoke;
+  min-height: 700px;
+
+  .container {
+    background-color: white;
+    min-height: 600px;
+  }
+}
+
+.logo {
+  background-color: #343a40;
+}
+
+.menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 4px;
+  background-color: #343a40;
+  a{
+    color: #848584;
+    font-size: 22px;
+    text-decoration: none;
+    &:hover{
+      text-decoration: none;
+      color: #f00000;
+    }
+    li {
+      background-color: #343a40;
+      border: whitesmoke solid 1px;
+      text-align: center;
+      padding: 4px;
+      &:hover{
+        background-color: #848584;
+      }
+    }
+  }
+}
+.archive-item{
+  background-color: whitesmoke;
+  border: whitesmoke 1px solid;
+  border-radius: 4px;
+  padding: 7px;
+  a{
+    color: black;
+    text-decoration: none;
+    &:hover{
+      text-decoration: none;
+    }
+  }
+}

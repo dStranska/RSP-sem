@@ -1,5 +1,46 @@
+{% extends 'base.twig' %}
 {% block body %}
-   <h1>Tady bude nase super applikace do RSP</h1>
+    <div class="content">
+        <div class="row">
+            <div class="col-3">
+                {% include '_include/menu.twig' %}
+            </div>
+            <div class="col-9">
+
+                {% if user is defined and user %}
+                {% if user.getRole() =='autor' %}
+                    <h1>Moje Články</h1>
+
+                    budou zde
+                {% endif %}
+                {% else %}
+
+                <h1>Informace</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium aliquam assumenda commodi
+                    cupiditate dolor eaque eos eum, explicabo hic in libero nesciunt non quas repellat sapiente soluta
+                    voluptas, voluptatibus!</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium aliquam assumenda commodi
+                    cupiditate dolor eaque eos eum, explicabo hic in libero nesciunt non quas repellat sapiente soluta
+                    voluptas, voluptatibus!</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium aliquam assumenda commodi
+                    cupiditate dolor eaque eos eum, explicabo hic in libero nesciunt non quas repellat sapiente soluta
+                    voluptas, voluptatibus!</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium aliquam assumenda commodi
+                    cupiditate dolor eaque eos eum, explicabo hic in libero nesciunt non quas repellat sapiente soluta
+                    voluptas, voluptatibus!</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium aliquam assumenda commodi
+                    cupiditate dolor eaque eos eum, explicabo hic in libero nesciunt non quas repellat sapiente soluta
+                    voluptas, voluptatibus!</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium aliquam assumenda commodi
+                    cupiditate dolor eaque eos eum, explicabo hic in libero nesciunt non quas repellat sapiente soluta
+                    voluptas, voluptatibus!</p>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+
 {% endblock %}
 
 

@@ -1,0 +1,46 @@
+version: "3.2"
+services:
+    web:
+        container_name: rsp-web
+        image: "docker-registry.vlp.cz:5000/nginx"
+        volumes:
+        #- "./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf"
+        - "./docker/default.template.conf:/etc/nginx/conf.d/default.template"
+        - "./:/code"
+        ports:
+        - "${NGINX_PORT_HTTP}:80"
+        - "${NGINX_PORT_HTTPS}:443"
+        environment:
+        - NGINX_HOST=${NGINX_HOST}
+        command: /bin/sh -c "envsubst '$$NGINX_HOST' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+        depends_on:
+        - php
+    php:
+        container_name: rsp-php
+        image: "docker-registry.vlp.cz:5000/php-7.3"
+        expose:
+        - "9000"
+        volumes:
+        - ./:/code
+        environment:
+        - "PHP_ENV_MODE=${PHP_ENV_MODE}"
+        - "PHP_DATABASE_DSN=mysql:host=mysql;dbname=${MYSQL_DATABASE}"
+        - "PHP_DATABASE_USER=${MYSQL_USER}"
+        - "PHP_DATABASE_PASSWORD=${MYSQL_PASSWORD}"
+
+        links:
+        - mysql
+    mysql:
+        container_name: rsp-msql
+        image: "docker-registry.vlp.cz:5000/mariadb"
+        ports:
+            - "3306:3306"
+        volumes:
+            - "mariadb-data:/var/lib/mysql"
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+volumes:
+    mariadb-data:
