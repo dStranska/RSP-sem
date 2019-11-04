@@ -1,0 +1,106 @@
+{% extends 'base.twig' %}
+{% block body %}
+    <div class="content">
+        <div class="row">
+            <div class="col-3">
+                {% include '_include/menu.twig' %}
+            </div>
+            <div class="col-9">
+
+                {% if user is defined and user %}
+                {% if user.getRole() =='autor' %}
+                    <h1>Moje Články</h1>
+
+                    budou zde
+                {% endif %}
+                {% else %}
+
+                <h1>Informace pro autory</h1>
+                <div>
+                    <h3>Charakteristika časopisu</h3>
+                    <p>Časopis LOGOS POLYTECHNIKOS je vysokoškolský odborný recenzovaný časopis, který slouží<br>
+                       pro publikační aktivity akademických pracovníků Vysoké školy polytechnické Jihlava a jiných<br>
+                       vysokých škol, univerzit a výzkumných organizací. Od roku 2010 do roku 2018 vycházel<br>
+                       časopis čtyřikrát ročně v elektronické a tištěné podobě. Od roku 2019 je vydáván třikrát<br>
+                       ročně pouze v elektronické verzi. Jednotlivá čísla jsou tematicky zaměřená dle níže<br>
+                       uvedeného rozpisu.</p>
+                    <h3>Charakter publikovaných příspěvků a formální úprava</h3>
+                    <p>Publikovat je možné odborné články, statě, přehledové studie, recenze a další typy<br>
+                       odborných příspěvků v českém, slovenském a anglickém jazyce. Akceptovány jsou pouze<br>
+                       autorské texty, které nebyly dříve publikovány.<br>
+                       Do recenzního řízení jsou přijímány příspěvky tematicky odpovídající zaměření časopisu<br>
+                       a formálně upravené dle redakční šablony. Tato šablona je dostupná ke stažení <a href="https://www.vspj.cz/soubory/download/id/4186"><b>ZDE.</b></a><br>
+                       <br>
+                       Publikovat lze odborné texty z oblasti ekonomiky, managementu, marketingu, statistiky,<br>
+                       operačního výzkumu, finanční matematiky, pojišťovnictví, cestovního ruchu, regionálního<br>
+                       rozvoje, veřejné správy, sociologie, sportu, psychologie, sociální práce a zdravotnictví.<br></p>
+                     <h3>Doporučený rozsah příspěvku</h3>
+                     <p>Rozsah jednoho příspěvku by neměl přesáhnout 30 600 znaků. Příspěvky většího rozsahu je<br>
+                        možné přijmout do recenzního řízení po předchozí domluvě.</p>
+                     <h3>Způsob odevzání příspěvku</h3>
+                     <p>Příspěvky je možné odevzdat pomocí kontaktního rofmuláře, který je přístupný po přihlášení.</p>
+                     <h3>Doporučená citační metoda</h3>
+                     <p>Bibliografické reference je doporučeno strukturovat dle aktuálních verzí ČSN ISO 690 a ČSN<br>
+                        ISO 690-2 a jejich příloh.<br>
+                        Pokud je to možné, vyhněte se v textu odkazování k poznámkám pod čarou. Doporučeným<br>
+                        citačním stylem je citování pomocí systému „jméno, rok vydání a číslo strany“. Příklad:<br>
+                        (Novák, 2015, str. 100), případně (Novák, 2015a, str. 100).</p>
+                     <h3>Náležitost textu a formátování</h3>
+                     <p>Informace o doporučené struktuře a formátování textu jsou dostupné prostřednictvím<br>
+                        redakční šablony. Jiné formátování je doporučeno omezit na nebytnou míru.<br><br><br>
+                        Text musí vždy obsahovat:<br>
+                        <ul>
+                            <li>název příspěvku v čekém, případně slovenském jazyce</li>
+                            <li>název příspěvku v anglickém jazyce</li>
+                            <li>klíčová slova v českém, případně slovenském jazyce</li>
+                            <li>klíčová slova v anglickém jazyce</li>
+                            <li>abstrakt v českém, případně slovenském jazyce</li>
+                            <li>abstrakt v anglickém jazyce</li>
+                            <li>celá jména všech autorů příspěvku</li>
+                            <li>kontaktní e-mailové adresy všech autorů příspěvku</li>
+                            <li>úplné názvy pracovišť všech autorů příspěvku</li>
+                            <li>korespondenční adresy pracovišť všech autorů příspěvku</li>
+                        </ul><br>
+                        Příklad:<br><br>
+                        Jméno a příjmení autora (včetně akademických a profesních titulů)<br>
+                        Název pracoviště autora (u vysokoškolského nebo univerzitního pracoviště se uvádí i název<br>
+                        katedry, případně fakulty)<br>
+                        korespondenční adresa pracoviště:<br>
+                        Název ulice, číslo popisné/číslo orientační<br>
+                        Název obce, poštovní směrovací číslo<br>
+                        E-mailová adresa autora<br><br>
+                        Český (slovenský) překlad názvu článku, abstraktu a klíčových slov se nevyžaduje<br>
+                        v případech, kdy přispěvatelem není český ani slovenský rodilý mluvčí.<br>
+                        Pokud doručený text neobsahuje některou z výše uvedených náležitostí, je přispěvatel<br>
+                        požádán o její doplnění.</p>
+                      <h3>Recenzní řízení</h3>
+                      <p>Každý příspěvek je před vydáním posouzen dvěma recenzenty dle následujících kritérií:<br><br>
+                      <ul>
+                            <li>aktuálnost, zajímavost a přínosnost</li>
+                            <li>originalita</li>
+                            <li>odborná úroveň</li>
+                            <li>jazyková a stylistická úroveň</li>
+                      </ul>
+                      <br><br>
+                      Oba posudky jsou před vydáním příspěvku odeslány jeho autorům prostřednictvím<br>
+                      elektronické pošty. Autoři mohou být souběžně vyzváni ke zvážení případných výhrad<br>
+                      a doporučení ze strany recenzenta a požádáni o úpravu textu příspěvku.<br></p>
+                      <h3>Adresa nakladatele</h3>
+                      <p>Vysoká škola polytechnická Jihlava<br>
+                        redakce LOGOS POLYTECHNIKOS<br>
+                        Tolstého 1556/16<br>
+                        586 01 Jihlava<br><br>
+                        IČ: 71226401<br>
+                        DIČ: CZ71226401</p>
+                       <h3>Kontaktní osoba</h3>
+                       <p>Bc. Zuzana Mafková<br>
+                        e-mail: <a href="mailto:logos@vspj.cz">logos@vspj.cz</a></p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}
