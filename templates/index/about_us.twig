@@ -1,0 +1,53 @@
+{% extends 'base.twig' %}
+{% block body %}
+    <div class="content">
+        <div class="row">
+            <div class="col-3">
+                {% include '_include/menu.twig' %}
+            </div>
+            <div class="col-9">
+
+                {% if user is defined and user %}
+                {% if user.getRole() =='autor' %}
+                    <h1>Moje Články</h1>
+
+                    budou zde
+                {% endif %}
+                {% else %}
+
+                <h1>O nás</h1>
+                <div><p>Adresa nakladatele: Vysoká škola polytechnická Jihlava, redakce LOGOS POLYTECHNIKOS, Tolstého 1556/16, 586 01 Jihlava</p></div>
+                <div><h1>Náš tým</h1>
+                        <div>Šéfredaktor</div>
+                        <p>doc. Ing. Zdeněk Horák, Ph.D. (Vysoká škola polytechnická Jihlava)</p>
+                        <br>
+                        <div>Redakční rada</div>
+                        <p>prof. PhDr. RNDr. Martin Boltižiar, PhD. (Univerzita Konštantína Filozofa v Nitre)<br>
+                          prof. RNDr. Helena Brožová, CSc. (Česká zemědělská univerzita v Praze)<br>
+                          doc. PhDr. Lada Cetlová, PhD. (Vysoká škola polytechnická Jihlava)<br>
+                          prof. Mgr. Ing. Martin Dlouhý, Dr. MSc. (Vysoká škola ekonomická v Praze)<br>
+                          prof. Ing. Tomáš Dostál, DrSc. (Vysoká škola polytechnická Jihlava)<br>
+                          doc. Ing. Jiří Dušek, Ph.D. (Vysoká škola evropských a regionálních studií)<br>
+                          doc. RNDr. Petr Gurka, CSc. (Vysoká škola polytechnická Jihlava)<br>
+                          Ing. Veronika Hedija, Ph.D. (Vysoká škola polytechnická Jihlava)<br>
+                          doc. Ing. Zdeněk Horák, Ph.D. (Vysoká škola polytechnická Jihlava)<br>
+                          Ing. Ivica Linderová, PhD. (Vysoká škola polytechnická Jihlava)<br>
+                          prof. MUDr. Aleš Roztočil, CSc. (Vysoká škola polytechnická Jihlava)<br>
+                          doc. PhDr. David Urban, Ph.D. (Vysoká škola polytechnická Jihlava)<br>
+                          doc. Dr. Ing. Jan Voráček, CSc. (Vysoká škola polytechnická Jihlava)<br>
+                          RNDr. PaedDr. Ján Veselovský, PhD. (Univerzita Konštantína Filozofa v Nitre)<br>
+                          doc. Ing. Libor Žídek, Ph.D. (Masarykova univerzita Brno)</p>
+                </div>
+
+                <div><p>Chcešli nás kontaktovat pro více informací, tak neváhej. <br>
+                        Kontaktní osoba: Bc. Zuzana Mafková:   <a href="mailto:zuzana.mafkova@vspj.cz">zuzana.mafkova@vspj.cz</p></a>
+                </div>
+                <br><br>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}
