@@ -1,0 +1,72 @@
+{% extends 'base.twig' %}
+{% block body %}
+    <div class="content">
+        <div class="row">
+            <div class="col-3">
+                {% include '/_include/menu.twig' %}
+            </div>
+            <div class="col-9">
+
+                {% if user is defined and user %}
+
+
+                    <h1>Moje Články</h1>
+
+
+                    {% if articles %}
+                        <table class="table table-striped text-center">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Název</th>
+                                <th scope="col">Autorský tým</th>
+                                <th scope="col">Stav</th>
+                                <th scope="col">Téma článku</th>
+                                <th scope="col">Komentář</th>
+                                <th scope="col">Vytvořeno</th>
+                                <th scope="col">Soubory</th>
+                                {#
+                                    <th scope="col">Akce</th>
+                                #}
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for a in articles %}
+                                <tr>
+                                    <th scope="row">{{ a.id }}</th>
+                                    <td>{{ a.name }}</td>
+                                    <td>{{ a.autorsName }}</td>
+                                    <td><strong>{{ a.getActualStatus() }}</strong></td>
+                                    <td>{{ a.theme }}</td>
+                                    <td>{{ a.comment }}</td>
+                                    <td>{{ a.createdDate.format('Y-m-d H:i:s') }}</td>
+                                    <td><a class="btn btn-success" href="/article-files/{{ a.getId() }}"><i
+                                                    class="fa fa-eye"></i></a></td>
+                                    {% if a.status=='repair' %}
+                                        <td>
+
+                                            <a href="/recenze/{{ a.getId() }}"
+                                               class="btn btn-block btn-outline-primary">Recenze</a>
+                                            <a href="/clanek/{{ a.getId() }}" class="btn btn-block btn-outline-danger">Upravit</a>
+
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>Nejsou tu žádné články</p>
+
+                    {% endif %}
+
+
+                {% endif %}
+
+
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

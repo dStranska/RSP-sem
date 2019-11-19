@@ -1,0 +1,39 @@
+{% extends 'base.twig' %}
+{% block body %}
+<div class="content">
+    <div class="row">
+        <div class="col-3">
+            {% include '_include/menu.twig' %}
+        </div>
+        <div class="col-9">
+
+            <h1>Soubory pro: {{ article.getName()}}</h1>
+            {% if files %}
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Soubor nahrán</th>
+                        <th scope="col">Stáhnout</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for f in files %}
+                        <tr>
+                            <td>{{ f.createdDate.format('Y-m-d H:i:s') }}</td>
+                            <td><a class="btn btn-success" download href="{{ f.fullPath }}"><i class="fa fa-download" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Nejsou tu žádné soubory</p>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}

@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 class User
 {
     const ROLE_AUTOR='autor';
+    const ROLE_RECENZENT='recenzent';
 
     /**
      * @ORM\Id()

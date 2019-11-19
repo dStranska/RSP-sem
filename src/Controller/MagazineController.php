@@ -15,6 +15,9 @@ class MagazineController extends BaseController
      */
     public function archiveAction()
     {
-        return $this->render('magazine/archive.twig');
+        return $this->render('magazine/archive.twig',
+            [
+                'user' => $this->loggedUser,
+            ]);
     }
 }

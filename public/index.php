@@ -4,7 +4,8 @@ use App\Kernel;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
 
-
+define('DS',DIRECTORY_SEPARATOR);
+define('DIR_FILES',__DIR__.DS.'files');
 require dirname(__DIR__).'/config/bootstrap.php';
 
 if ($_SERVER['APP_DEBUG']) {

@@ -1,0 +1,16 @@
+{% extends 'base.twig' %}
+{% block body %}
+<div class="content">
+    <div class="row">
+        <div class="col-3">
+            {% include '_include/menu.twig' %}
+        </div>
+        <div class="col-9">
+            <h1>Přidání nového článku</h1>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

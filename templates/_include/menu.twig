@@ -1,33 +1,44 @@
 <h1>MENU</h1>
 
 <ul class="menu mb-3">
-    <a href="#">
-        <li>Novinky</li>
-    </a>
-    <a href="index/about_us.twig">
-        <li>O nás</li>
-    </a>
-    <a href="for_authors/for_authors.twig">
+    <a class="{{ app.request.get('_route') == 'autors' ? 'active' }}" href="/autors">
         <li>Pro autory</li>
     </a>
-    <a href="/magazine">
+    <a class="{{ app.request.get('_route') == 'magazine' ? 'active' }}" href="/magazine">
         <li>Časopisy</li>
     </a>
+    <a class="{{ app.request.get('_route') == 'about' ? 'active' }}" href="/about">
+        <li>O nás</li>
+    </a>
+
 </ul>
 {% if user is defined and user %}
     {% if user.getRole() =='autor' %}
         <h2>Autor-menu</h2>
 
         <ul class="menu">
+            <a class="{{ app.request.get('_route') == 'homepage' ? 'active' }}"
+               href="/">
+                <li>Moje články</li>
+            </a>
+            <a class="{{ app.request.get('_route') == 'add-article' ? 'active' }}" href="/add-article">
+                <li>Přidat článek</li>
+            </a>
             <a href="#">
                 <li>Termíny</li>
             </a>
             <a href="#">
-                <li>Přidat článek</li>
-            </a>
-            <a href="#">
                 <li>Témata</li>
             </a>
+        </ul>
+    {% elseif user.getRole() =='redaktor' %}
+        <h2>Redaktor</h2>
+        <ul class="menu">
+            <a class="{{ app.request.get('_route') == 'homepage' ? 'active' }}"
+               href="/">
+                <li>Články</li>
+            </a>
+
         </ul>
     {% endif %}
 {% endif %}

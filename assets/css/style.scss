@@ -36,6 +36,15 @@
     color: #848584;
     font-size: 22px;
     text-decoration: none;
+    &.active{
+      color: white;
+      pointer-events: none;
+      cursor: default;
+      text-decoration: none;
+      li{
+        background-color: #848584;
+      }
+    }
     &:hover{
       text-decoration: none;
       color: #f00000;
@@ -49,6 +58,7 @@
         background-color: #848584;
       }
     }
+
   }
 }
 .archive-item{

@@ -1,0 +1,42 @@
+{% extends 'base.twig' %}
+{% block body %}
+    <div class="content">
+    <div class="row">
+    <div class="col-3">
+        {% include '/_include/menu.twig' %}
+    </div>
+    <div class="col-9">
+
+
+        <h1>Recenze k článku: {{ a.name }}</h1>
+    {% if reviews %}
+        <table class="table table-striped text-center">
+            <thead class="thead-dark">
+            <tr>
+
+                <th scope="col">Skore</th>
+                <th scope="col">Komentář</th>
+                <th scope="col">Schváleno</th>
+
+
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for r in reviews %}
+                <tr>
+                    <td>{{ r.score }}</td>
+                    <td>{{ r.comment }}</td>
+                    <td>{% if r.approved==1 %}<span style="color: #83A342">ANO</span>{% else %}<span style="color: red">NE</span>{% endif %}</td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+        <div>žádné recenze tu nejsou</div>
+    {% endif %}
+
+
+{% endblock %}

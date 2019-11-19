@@ -1,0 +1,174 @@
+{% extends 'base.twig' %}
+{% block body %}
+    <div class="content">
+        <div class="row">
+            <div class="col-3">
+                {% include '_include/menu.twig' %}
+            </div>
+            <div class="col-9">
+
+                {% if user is defined and user %}
+
+
+                    <h1>Články</h1>
+                    <h2>Nové</h2>
+                    {% if articles %}
+                        <table class="table table-striped text-center">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Název</th>
+                                <th scope="col">Autorský tým</th>
+                                <th scope="col">Stav</th>
+                                <th scope="col">Téma článku</th>
+                                <th scope="col">Komentář</th>
+                                <th scope="col">Soubory</th>
+                                <th scope="col">Recenzenti</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for a in articles %}
+                                <tr>
+                                    <td>{{ a.name }}</td>
+                                    <td>{{ a.autorsName }}</td>
+                                    <td><strong>{{ a.getActualStatus() }}</strong></td>
+                                    <td>{{ a.theme }}</td>
+                                    <td>{{ a.comment }}</td>
+                                    <td><a class="btn btn-success" href="/article-files/{{ a.getId() }}"><i
+                                                    class="fa fa-eye"></i></a></td>
+                                    <td>
+                                        {% set form = formObject.createView %}
+                                        {{ form_start(form,{'attr': {'id': a.id() }}) }}
+                                        {{ form_widget(form.id_article,{'value':a.id}) }}
+                                        {{ form_widget(form.users) }}
+                                        {{ form_end(form) }}
+                                    </td>
+
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>Nejsou tu žádné články</p>
+
+                    {% endif %}
+
+
+                    <hr>
+                    <h2>Čekající</h2>
+                    {% if waiting_articles %}
+                        <table class="table table-striped text-center">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Název</th>
+                                <th scope="col">Autorský tým</th>
+                                <th scope="col">Stav</th>
+                                <th scope="col">Téma článku</th>
+                                <th scope="col">Komentář</th>
+                                <th scope="col">Vytvořeno</th>
+                                <th scope="col">Soubory</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for a in waiting_articles %}
+                                <tr class="mt-5">
+                                    <td>{{ a.name }}</td>
+                                    <td>{{ a.autorsName }}</td>
+                                    <td><strong>{{ a.getActualStatus() }}</strong></td>
+                                    <td>{{ a.theme }}</td>
+                                    <td>{{ a.comment }}</td>
+                                    <td>{{ a.createdDate.format('Y-m-d H:i:s') }}</td>
+                                    <td><a class="btn btn-outline-info" href="/article-files/{{ a.getID() }}"><i
+                                                    class="fa fa-eye"></i></a></td>
+
+
+                                </tr>
+                                {#
+                                <tr>
+
+                                    <td>
+                                        <strong>RECENZE:</strong>
+                                    </td>
+
+
+
+
+                                    {% for r in reviews[a.getId()] %}
+
+                                        <td colspan="3">
+                                            <div>
+
+                                                <a href="#" class="btn btn-outline-primary">Recenzent </a>
+                                                <a href="#" class="btn btn-outline-success">Recenze </a>
+                                            </div>
+                                        </td>
+
+                                    {% endfor %}
+                                </tr>
+                            #}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>Nejsou tu žádné články</p>
+
+                    {% endif %}
+                    <hr>
+                    <h2>Hotové recenze</h2>
+                    {% if done_articles %}
+                        <table class="table table-striped text-center">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Název</th>
+                                <th scope="col">Autorský tým</th>
+                                <th scope="col">Stav</th>
+                                <th scope="col">Téma článku</th>
+                                <th scope="col">Komentář</th>
+                                <th scope="col">Vytvořeno</th>
+                                <th scope="col">Soubory</th>
+                                <th scope="col">??</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for a in done_articles %}
+                                <tr class="mt-5">
+                                    <th>{{ a.id }}</th>
+                                    <td>{{ a.name }}</td>
+                                    <td>{{ a.autorsName }}</td>
+                                    <td><strong>{{ a.getActualStatus() }}</strong></td>
+                                    <td>{{ a.theme }}</td>
+                                    <td>{{ a.comment }}</td>
+                                    <td>{{ a.createdDate.format('Y-m-d H:i:s') }}</td>
+                                    <td><a class="btn btn-success" href="/article-files/{{ a.getID() }}"><i
+                                                    class="fa fa-eye"></i></a></td>
+                                    <td>
+                                        <a class="btn btn-block btn-outline-info" href="#{{ a.getID() }}">
+                                            UPRAVIT
+                                        </a>
+                                        {#
+                                        <a class="btn btn-block btn-success" href="#{{ a.getID() }}">
+                                            SCHVÁLIT
+                                        </a>
+                                        <a class="btn btn-block btn-danger" href="#{{ a.getID() }}">
+                                            ZAMÍTNOUT
+                                        </a>
+                                        #}
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>Nejsou tu žádné články</p>
+
+                    {% endif %}
+
+                {% endif %}
+
+
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

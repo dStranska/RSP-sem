@@ -1,0 +1,21 @@
+{% extends 'base.twig' %}
+{% block body %}
+<div class="content">
+    <div class="row">
+        <div class="col-3">
+            {% include '_include/menu.twig' %}
+        </div>
+        <div class="col-9">
+            <h1>{{ text }}</h1>
+            {{ form_start(form) }}
+
+            {{ form_widget(form.name) }}
+            {{ form_widget(form.autors_name) }}
+            {{ form_widget(form.file,{'required': false} ) }}
+            {{ form_widget(form.comment) }}
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
