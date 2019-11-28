@@ -1,0 +1,44 @@
+{% extends 'base.twig' %}
+{% block body %}
+<div class="content">
+    <div class="row">
+        <div class="col-3">
+            {% include '_include/menu.twig' %}
+        </div>
+        <div class="col-9">
+
+            <h1>Témata: </h1>
+            {% if themes %}
+                <table class="table table-striped text-center">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Název</th>
+                        <th scope="col">Počet nových</th>
+                        <th scope="col">Počet v recenzentním řízení</th>
+                        <th scope="col">Počet schálených</th>
+                        <th scope="col">Celkový počet</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for t in themes %}
+                        <tr>
+                            <td>{{ t['name']}}</td>
+                            <td>{{ t['new']}}</td>
+                            <td>{{ t['in_progress']}}</td>
+                            <td>{{ t['done']}}</td>
+                            <td><strong>{{ t['total']}}</strong></td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Nejsou tu žádné soubory</p>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}
