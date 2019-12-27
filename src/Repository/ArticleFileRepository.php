@@ -36,10 +36,6 @@ class ArticleFileRepository extends ServiceEntityRepository
     }
     */
 
-    public function setAllOld($idAuthor)
-    {
-
-    }
     /*
     public function findOneBySomeField($value): ?ArticleFile
     {

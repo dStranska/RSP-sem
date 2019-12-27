@@ -19,6 +19,36 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
+    public function getArticlesByAuthor(int $idUser)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.author = :val')
+            ->setParameter('val', $idUser)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function getAllWaiting()
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.status = :val')
+            ->setParameter('val', 'in_progress')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function setReviewDone($id)
+    {
+        return $this->createQueryBuilder("a")->update()
+            ->set('a.status', "'review_done'")
+            ->where('a.id = ?1')
+            ->setParameter(1, $id)
+            ->getQuery()->execute();
+
+    }
+
     // /**
     //  * @return Article[] Returns an array of Article objects
     //  */
@@ -47,6 +77,4 @@ class ArticleRepository extends ServiceEntityRepository
         ;
     }
     */
-
-
 }

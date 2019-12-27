@@ -2,7 +2,8 @@
 
 namespace App\Entity;
 
-use App\Repository\ReviewRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,16 +12,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Article
 {
-
     const STATUS_NEW = 'new';
-    const STATUS_IN_PROGRES = 'in_progress';
-    const STATUS_RE_DONE = 're_done';
+    const STATUS_IN_PROGRESS = 'in_progress';
+    const STATUS_REVIEW_DONE = 'review_done';
     const STATUS_REPAIR = 'repair';
-    const STATUS_SUCCESS = 'success';
+    const STATUS_REPAIR_DONE = 'repair_done';
+    const STATUS_ARCHIVED = 'archived';
+
+    const STATUS_DONE = 'done';
     const STATUS_DECLINE = 'decline';
 
-    const ROLE_AUTOR = 'autor';
-    const ROLE_REDACTOR = 'redaktor';
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -34,14 +35,9 @@ class Article
     private $name;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $id_autor;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
-    private $autors_name;
+    private $authors_name;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -54,58 +50,34 @@ class Article
     private $created_date;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\ArticleFile", mappedBy="article", orphanRemoval=true)
      */
-    private $id_journal;
+    private $articleFiles;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $id_theme;
-
-    /**
-     * @ORM\Column(type="string", length=1000, nullable=true)
-     */
-    private $comment;
-
-    /**
-     * @ORM\Column(type="string", length=1000, nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\ArticleTheme", inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $theme;
 
     /**
-     * @return mixed
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", cascade={"merge"}, inversedBy="article")
+     * @ORM\JoinColumn(nullable=false)
      */
-    public function getTheme()
-    {
-        return $this->theme;
-    }
+    private $author;
 
     /**
-     * @param mixed $theme
+     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="article", orphanRemoval=true)
      */
-    public function setTheme($theme): void
-    {
-        $this->theme = $theme;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getIdTheme()
-    {
-        return $this->id_theme;
-    }
-
-    /**
-     * @param mixed $id_theme
-     */
-    public function setIdTheme($id_theme): void
-    {
-        $this->id_theme = $id_theme;
-    }
+    private $reviews;
 
     public $file;
+
+    public function __construct()
+    {
+        $this->articleFiles = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -124,26 +96,14 @@ class Article
         return $this;
     }
 
-    public function getIdAutor(): ?int
+    public function getAuthorsName(): ?string
     {
-        return $this->id_autor;
+        return $this->authors_name;
     }
 
-    public function setIdAutor(int $id_autor): self
+    public function setAuthorsName(string $authors_name): self
     {
-        $this->id_autor = $id_autor;
-
-        return $this;
-    }
-
-    public function getAutorsName(): ?string
-    {
-        return $this->autors_name;
-    }
-
-    public function setAutorsName(string $autors_name): self
-    {
-        $this->autors_name = $autors_name;
+        $this->authors_name = $authors_name;
 
         return $this;
     }
@@ -172,14 +132,62 @@ class Article
         return $this;
     }
 
-    public function getIdJournal(): ?int
+    /**
+     * @return Collection|ArticleFile[]
+     */
+    public function getArticleFiles(): Collection
     {
-        return $this->id_journal;
+        return $this->articleFiles;
     }
 
-    public function setIdJournal(?int $id_journal): self
+    public function addArticleFile(ArticleFile $articleFile): self
     {
-        $this->id_journal = $id_journal;
+        if (!$this->articleFiles->contains($articleFile)) {
+            $this->articleFiles[] = $articleFile;
+            $articleFile->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticleFile(ArticleFile $articleFile): self
+    {
+        if ($this->articleFiles->contains($articleFile)) {
+            $this->articleFiles->removeElement($articleFile);
+            // set the owning side to null (unless already changed)
+            if ($articleFile->getArticle() === $this) {
+                $articleFile->setArticle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getTheme(): ?ArticleTheme
+    {
+        return $this->theme;
+    }
+
+    public function getThemeName(): ?string
+    {
+        return $this->getTheme()->getName();
+    }
+
+    public function setTheme(?ArticleTheme $theme): self
+    {
+        $this->theme = $theme;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }
@@ -192,39 +200,60 @@ class Article
         $this->setCreatedDate(new \DateTime());
     }
 
-    public function getComment(): ?string
-    {
-        return $this->comment;
-    }
-
-    public function setComment(?string $comment): self
-    {
-        $this->comment = $comment;
-
-        return $this;
-    }
 
     public function getActualStatus()
     {
         switch ($this->getStatus()) {
             case self::STATUS_NEW:
-                return 'Nový';
+                return 'nový';
                 break;
-            case self::STATUS_IN_PROGRES:
-                return "Čeká se na recenzi";
+            case self::STATUS_IN_PROGRESS:
+                return 'čeká se na recenzi';
                 break;
-            case self::STATUS_RE_DONE:
-                return "Recenze hotová, čeká se na vyjádření redaktora";
+            case self::STATUS_REVIEW_DONE:
+                return 'recenze hotová';
                 break;
             case self::STATUS_REPAIR:
-                return "Recenze k dispozici";
+                return 'požadavek na úpravu';
                 break;
-            case self::STATUS_SUCCESS:
-                return "Článek byl schválen a zařazen do čísla XY";
+            case self::STATUS_DONE:
+                return 'Schválen';
                 break;
             case self::STATUS_DECLINE:
-                return "Článek byl zamítnut";
+                return 'Zamítnut';
                 break;
+
         }
+    }
+
+    /**
+     * @return Collection|Review[]
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): self
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews[] = $review;
+            $review->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): self
+    {
+        if ($this->reviews->contains($review)) {
+            $this->reviews->removeElement($review);
+            // set the owning side to null (unless already changed)
+            if ($review->getArticle() === $this) {
+                $review->setArticle(null);
+            }
+        }
+
+        return $this;
     }
 }

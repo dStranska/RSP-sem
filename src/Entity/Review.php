@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Review
 {
+    const STATUS_NEW = "new";
+    const STATUS_DONE = 'done';
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -17,57 +19,40 @@ class Review
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $id_article;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $id_user;
-
-    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $score;
 
     /**
-     * @ORM\Column(type="string", length=1000, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $comment;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="smallint")
      */
-    private $approved;
+    private $approved = 0;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="reviews")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $article;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reviews")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $status = self::STATUS_NEW;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdArticle(): ?int
-    {
-        return $this->id_article;
-    }
-
-    public function setIdArticle(int $id_article): self
-    {
-        $this->id_article = $id_article;
-
-        return $this;
-    }
-
-    public function getIdUser(): ?int
-    {
-        return $this->id_user;
-    }
-
-    public function setIdUser(int $id_user): self
-    {
-        $this->id_user = $id_user;
-
-        return $this;
     }
 
     public function getScore(): ?int
@@ -99,10 +84,55 @@ class Review
         return $this->approved;
     }
 
-    public function setApproved(?int $approved): self
+    public function setApproved(int $approved): self
     {
         $this->approved = $approved;
 
         return $this;
+    }
+
+    public function getArticle(): ?Article
+    {
+        return $this->article;
+    }
+
+    public function setArticle(?Article $article): self
+    {
+        $this->article = $article;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getResult()
+    {
+        if ($this->getApproved() == 0) {
+            return 'Nedoporučen ke schválení';
+        } else {
+            return 'Doporučen ke schválení';
+        }
     }
 }

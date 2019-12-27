@@ -19,9 +19,18 @@
             <div class="row mt-5">
                 <div class="col-12" style="text-align: center;border: #959595 solid 3px">
                     <h3>Autoři</h3>
-                    autor@rsp.vspj  /  heslo123
-                    <h3>Redaktor</h3>
-                    redaktor@rsp.vspj / heslo321
+                    {% for u in authors %}
+                        {{ u.email }} / {{ u.password }}
+                    {% endfor %}
+                    <h3>Redaktoři</h3>
+                    {% for u in redactors %}
+                        {{ u.email }} / {{ u.password }}
+                    {% endfor %}
+                    <h3>Recenzenti</h3>
+                    {% for u in recenzents %}
+                        {{ u.email }} / {{ u.password }}<br/>
+                    {% endfor %}
+
                 </div>
             </div>
         </div>

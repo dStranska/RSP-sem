@@ -1,0 +1,89 @@
+{% extends 'base.twig' %}
+{% block body %}
+    <div class="content">
+        <div class="row">
+            <div class="col-3">
+                {% include '_include/menu.twig' %}
+            </div>
+            <div class="col-9">
+
+                {% if user is defined and user %}
+
+
+                    <h1>Články</h1>
+                    <h2>K recenzi</h2>
+                    {% if new %}
+                        <table class="table table-striped text-center">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Název</th>
+                                <th scope="col">Autorský tým</th>
+                                <th scope="col">Téma článku</th>
+                                <th scope="col">Akce</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for r in new %}
+                                <tr>
+                                    <td>{{ r.article.name }}</td>
+                                    <td>{{ r.article.getAuthorsName() }}</td>
+                                    <td>{{ r.article.getThemeName() }}</td>
+                                    <td>
+                                        <a class="btn btn-success" href="/article-files/{{ r.getId() }}">Stáhnout soubory</a>
+                                        <a class="btn btn-outline-success" href="/add-review/{{ r.getId() }}"> Napsat recenzi</a>
+                                    </td>
+
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>Nejsou tu žádné články</p>
+
+                    {% endif %}
+
+
+                    <h2>Hotová recenze</h2>
+                    {% if done %}
+                        <table class="table table-striped text-center">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Název</th>
+                                <th scope="col">Autorský tým</th>
+                                <th scope="col">Téma článku</th>
+                                <th scope="col">Akce</th>
+                                <th scope="col">Zhodnocení</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for r in done %}
+                                <tr>
+                                    <td>{{ r.article.name }}</td>
+                                    <td>{{ r.article.getAuthorsName() }}</td>
+
+                                    <td>{{ r.article.getThemeName() }}</td>
+
+                                    <td>
+                                        <a class="btn btn-success" href="/article-files/{{ r.getId() }}">Stáhnout soubory</a>
+                                    </td>
+                                    <td>
+                                        {{ r.getResult() }}
+                                    </td>
+
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>Nejsou tu žádné články</p>
+
+                    {% endif %}
+                {% endif %}
+
+
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

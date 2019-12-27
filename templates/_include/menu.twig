@@ -5,15 +5,18 @@
         <li>Pro autory</li>
     </a>
     <a class="{{ app.request.get('_route') == 'magazine' ? 'active' }}" href="/magazine">
-        <li>Časopisy</li>
+        <li>Archív časopisů</li>
     </a>
     <a class="{{ app.request.get('_route') == 'about' ? 'active' }}" href="/about">
         <li>O nás</li>
     </a>
+    <a class="{{ app.request.get('_route') == 'contact' ? 'active' }}" href="/contact">
+        <li>Kontaktní formulář</li>
+    </a>
 
 </ul>
 {% if user is defined and user %}
-    {% if user.getRole() =='autor' %}
+    {% if user.getRole() =='author' %}
         <h2>Autor-menu</h2>
 
         <ul class="menu">
@@ -39,6 +42,17 @@
                href="/themes">
                 <li>Témata</li>
             </a>
+
+        </ul>
+
+    {% elseif user.getRole() =='recenzent' %}
+        <h2>Rezenzent</h2>
+        <ul class="menu">
+            <a class="{{ app.request.get('_route') == 'homepage' ? 'active' }}"
+               href="/">
+                <li>Články</li>
+            </a>
+
 
         </ul>
     {% endif %}

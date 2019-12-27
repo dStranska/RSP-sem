@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Review;
 use App\Entity\User;
 use App\Form\ArticleForm;
 use App\Repository\ArticleRepository;
@@ -18,6 +19,7 @@ class ReviewController extends BaseController
 
     /** @var ReviewRepository */
     public $reviewsRepository;
+
 
     public function __construct(ArticleRepository $articleRepository,ReviewRepository $reviewRepository)
     {
@@ -45,6 +47,49 @@ class ReviewController extends BaseController
             [
                 'reviews' => $reviews,
                 'a'=>$article,
+                'user'=>$this->loggedUser
+            ]
+        );
+    }
+
+    /**
+     * @Route("/admin-recenze/{id}", name="admin-recenze")
+     */
+    public function recenzeAction($id)
+    {
+        $article=$this->articleRepository->find($id);
+        if($this->loggedUser->getRole()!=User::ROLE_REDACTOR){
+            $this->addFlash('error', 'Sem nemas přístup');
+            return $this->redirectToRoute('homepage');
+        }
+        $reviews=$this->reviewsRepository->findBy(['article'=>$id,'status'=>Review::STATUS_DONE]);
+
+
+        return $this->render('review/admin-review.twig',
+            [
+                'reviews' => $reviews,
+                'article'=>$article,
+                'user'=>$this->loggedUser
+            ]
+        );
+    }
+    /**
+     * @Route("/author-recenze/{id}", name="author-recenze")
+     */
+    public function authorRecenzeAction($id)
+    {
+        $article=$this->articleRepository->find($id);
+        if($this->loggedUser->getId()!=$article->getAuthor()->getId()){
+            $this->addFlash('error', 'Sem nemas přístup');
+            return $this->redirectToRoute('homepage');
+        }
+        $reviews=$this->reviewsRepository->findBy(['article'=>$id,'status'=>Review::STATUS_DONE]);
+
+
+        return $this->render('review/author-review.twig',
+            [
+                'reviews' => $reviews,
+                'article'=>$article,
                 'user'=>$this->loggedUser
             ]
         );

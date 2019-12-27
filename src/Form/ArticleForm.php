@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\AdminUser;
+use App\Entity\Article;
 use App\Entity\ArticleTheme;
 use App\Entity\User;
 use App\Repository\UserRepository;
@@ -23,7 +24,7 @@ class ArticleForm extends AbstractType
                 'attr' => ['class' => 'form-control mb-1', 'mapped' => false,'placeholder'=>'Název'],
                 'label'=>false
             ])
-            ->add('autors_name', TextType::class, [
+            ->add('authors_name', TextType::class, [
                 'attr' => ['class' => 'form-control mb-1', 'mapped' => false,'placeholder'=>'Autorský tým'],
                 'label'=>false
             ])
@@ -38,11 +39,6 @@ class ArticleForm extends AbstractType
                 'choice_label' => 'name',
                 'placeholder' => 'Téma článku',
                 'label' => false
-            ])
-            ->add('comment', TextType::class, [
-                'attr' => ['class' => 'form-control mb-1', 'mapped' => false,'placeholder'=>'Komentář'],
-                'label'=>false,
-                'required'=>false
             ])
             ->add('save', SubmitType::class, ['label' => 'Uložit', 'attr' => ['class' => 'btn btn-secondary','style'=>'width:100%']]);
     }
